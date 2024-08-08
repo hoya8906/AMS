@@ -1,0 +1,41 @@
+[
+  {
+    "accountNo": "4567890123",
+    "accountOwner": "최수박",
+    "_password": 4567,
+    "balance": 45000
+  },
+  {
+    "accountNo": "1235623422",
+    "accountOwner": "이사과",
+    "_password": 1234,
+    "balance": 60000,
+    "rentMoney": 45000
+  },
+  {
+    "accountNo": "2345670000",
+    "accountOwner": "김호박",
+    "_password": 1234,
+    "balance": 30000
+  },
+  {
+    "accountNo": "9876543210",
+    "accountOwner": "박멜론",
+    "_password": 1234,
+    "balance": 150000,
+    "rentMoney": 100000
+  },
+  {
+    "accountNo": "275976402658",
+    "accountOwner": "정용과",
+    "_password": 9488,
+    "balance": 70000,
+    "rentMoney": 70000
+  },
+  {
+    "accountNo": "1234567890",
+    "accountOwner": "신레몬",
+    "_password": 1234,
+    "balance": 25000
+  }
+]
