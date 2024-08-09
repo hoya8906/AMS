@@ -15,22 +15,21 @@
 */
 
 // 모듈 로드 및 전역 변수 생성
+// const readline = require('readline');
 const { createInterface } = require("readline");
-const readline = require('readline');
 const fs = require("fs");
 const Account = require("./Account")
 const MinusAccount = require("./MinusAccount")
 const AccountRepository = require("./AccountRepository")
 const Experiments = require("./Experiments")
-
-// 파일 저장 위치
-const filePath = "./accounts.json";
+const filePath = "./accounts.json"; // 계좌 정보 저장 파일
 
 // 변수와 메소드 초기화
-const regexpMoney = /^[1-9]\d*$/;
+const regexpMoney = /^[1-9]\d*$/; // Money 입력값 정규표현식
 let accounts = [];
 let menu = "";
 let tempArray, inputNo, inputMoney, inputKey;
+
 const accountRepository = new AccountRepository;
 const experiments = new Experiments();
 
@@ -95,18 +94,21 @@ async function validate(text, regexp, option) {
         }
 
         if (option === 1) {
+            // 계좌가 있을 때 전용
             if (accountRepository.findByNumber(inputNum)) {
                 return inputNum;
             } else {
                 console.log("입력하신 계좌는 없는 계좌입니다.");
             }
         } else if (option === 2) {
+            // 계좌가 없을 때 전용
             if (!accountRepository.findByNumber(inputNum)) {
                 return inputNum;
             } else {
                 console.log("입력하신 계좌는 이미 등록된 계좌입니다.");
             }
         } else {
+            // 계좌 외 입력값 검증결과 반환
             return inputNum;
         }
     }
@@ -114,6 +116,7 @@ async function validate(text, regexp, option) {
 
 checkFileExists(filePath);
 
+// 불러온 계좌 정보 데이터화
 accounts.forEach(account => {
     if (account.rentMoney !== undefined) {
         accountRepository.addAccount(new MinusAccount(
@@ -148,6 +151,7 @@ const printMenu = function () {
     console.log("---------------------------------------------------------------------");
 }
 
+// 주 동작
 const app = async function () {
     await experiments.drawHeader();
     let running = true;
@@ -195,6 +199,7 @@ const app = async function () {
             case 2: // 전체계좌 조회
                 printList();
                 showMenu("전체 조회")
+                
                 break;
 
             case 3: // 입금
