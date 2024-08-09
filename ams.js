@@ -167,14 +167,14 @@ const app = async function () {
 
                 if (no === 1) {
                     printHeader();
-                    accountRepository.addAccount(new Account(accountNum, accountOwner, password, initMoney));
+                    accountRepository.addAccount(new Account(accountNum, accountOwner, password, Number(initMoney)));
                     console.clear();
                     console.log(`[일반 ${menu} 완료]`);
                     console.log(`계좌 : ${accountNum} | 입금액 : ${initMoney}원`);
                 } else {
                     rentMoney = await validate("- 대출금액 : ", regexpMoney)
                     printHeader();
-                    accountRepository.addAccount(new MinusAccount(accountNum, accountOwner, password, initMoney, rentMoney));
+                    accountRepository.addAccount(new MinusAccount(accountNum, accountOwner, password, Number(initMoney), Number(rentMoney)));
                     console.clear();
                     console.log(`[마이너스 ${menu} 완료]`);
                     console.log(`계좌 : ${accountNum} | 입금액 : ${initMoney}원 | 대출액 : ${rentMoney}원`);
