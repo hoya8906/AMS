@@ -16,7 +16,8 @@ const filePath = "./accounts.json"; // 계좌 정보 저장 파일
 const regexpMoney = /^[1-9]\d*$/; // Money 입력값 정규표현식
 let accounts = [];
 let menu = "";
-let tempArray, inputNo, inputMoney, inputKey;
+let inputMoney = 0;
+let tempArray, inputNo, inputKey;
 
 const accountRepository = new AccountRepository;
 const experiments = new Experiments();
@@ -162,24 +163,25 @@ const app = async function () {
                 let accountNum = await validate("- 계좌번호(숫자 10~14자리) : ", /^\d{10,14}$/, 2)
                 let accountOwner = await validate("- 예금주명(한글 또는 영어 대문자 2~6자리) : ", /^[가-힣A-Z]{2,6}$/)
                 let password = await validate("- 비밀번호(숫자 4자리) : ", /^\d{4}$/)
-                let initMoney = await validate("- 입금액 : ", regexpMoney)
+                let initMoney = parseInt(await validate("- 입금액 : ", regexpMoney));
                 let rentMoney = 0;
+                initMoney = parseInt(initMoney);
 
                 if (no === 1) {
                     printHeader();
-                    accountRepository.addAccount(new Account(accountNum, accountOwner, password, Number(initMoney)));
+                    accountRepository.addAccount(new Account(accountNum, accountOwner, password, parseInt(initMoney)));
                     console.clear();
                     console.log(`[일반 ${menu} 완료]`);
                     console.log(`계좌 : ${accountNum} | 입금액 : ${initMoney}원`);
                 } else {
                     rentMoney = await validate("- 대출금액 : ", regexpMoney)
                     printHeader();
-                    accountRepository.addAccount(new MinusAccount(accountNum, accountOwner, password, Number(initMoney), Number(rentMoney)));
+                    accountRepository.addAccount(new MinusAccount(accountNum, accountOwner, password, parseInt(initMoney), parseInt(rentMoney)));
                     console.clear();
                     console.log(`[마이너스 ${menu} 완료]`);
                     console.log(`계좌 : ${accountNum} | 입금액 : ${initMoney}원 | 대출액 : ${rentMoney}원`);
                 }
-                tempArray = accountRepository.findByNumber(accountNum)
+                // tempArray = accountRepository.findByNumber(accountNum)
 
                 saveAccountsToFile();
                 break;
@@ -187,7 +189,7 @@ const app = async function () {
             case 2: // 전체계좌 조회
                 printList();
                 showMenu("전체 조회")
-                
+
                 break;
 
             case 3: // 입금
@@ -195,10 +197,10 @@ const app = async function () {
                 showMenu("입금")
 
                 inputNo = await validate("- 계좌번호 : ", /^\d{10,14}$/, 1)
-                inputMoney = await validate("- 입금액 : ", regexpMoney)
+                inputMoney = parseInt(await validate("- 입금액 : ", regexpMoney));
 
                 tempArray = accountRepository.findByNumber(inputNo)
-                tempArray.deposit(Number(inputMoney));
+                tempArray.deposit(parseInt(inputMoney));
 
                 saveAccountsToFile();
                 console.clear();

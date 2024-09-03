@@ -28,13 +28,14 @@ class Account {
     }
 
     deposit(money) {
-        this.balance += Number(money);
+        this.balance = parseInt(this.balance);
+        this.balance += parseInt(money);
         return this.balance;
     }
 
     withdraw(money, password) {
         let result = 0;
-        console.log(password, this.password);
+        // console.log(password, this.password);
 
         if (Number(password) === Number(this.password)) {
             if (this.balance >= money) {
